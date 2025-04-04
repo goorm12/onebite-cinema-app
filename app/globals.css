@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+@theme {
+  --color-soft-red: #ff6161;
+  --breakpoint-xs: 400px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1400px;
+}
+
+@utility container-box-* {
+  max-width: --value([ *]);
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: black;
+  padding: 0px 15px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+@layer utilities {
+  .before-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+}
