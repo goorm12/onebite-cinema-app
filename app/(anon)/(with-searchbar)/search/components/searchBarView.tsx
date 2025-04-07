@@ -19,6 +19,7 @@ const SearchBarView = ({
         value={searchValue}
         aria-label="검색 입력 창"
         className="border-2 border-red-400 px-2 py-1 rounded flex-1"
+        placeholder="영화 제목을 입력하세요"
       />
 
       <button
