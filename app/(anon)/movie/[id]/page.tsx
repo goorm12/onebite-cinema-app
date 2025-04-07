@@ -1,12 +1,21 @@
 import Image from "next/image";
 import { MovieData } from "@/app/types/types";
-import dummyData from "@/app/data/dummy.json";
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
-  const movie = dummyData.find((movie) => movie.id.toString() === id);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/movie/${id}`,
+    {
+      cache: "force-cache",
+    }
+  );
+
+  if (!response.ok) return <div>영화를 찾을 수 없습니다.</div>;
+
+  const movie: MovieData = await response.json();
 
   if (!movie) return <div>영화를 찾을 수 없습니다.</div>;
+
   return (
     <section className="flex flex-col gap-5 pt-5 pb-5">
       <div
