@@ -1,5 +1,18 @@
 import Image from "next/image";
 import { MovieData } from "@/app/types/types";
+import { notFound } from "next/navigation";
+
+export const generateStaticParams = async () => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie`, {
+    cache: "force-cache",
+  });
+
+  const movies: MovieData[] = await response.json();
+  return movies.map((movie) => ({
+    id: movie.id.toString(),
+  }));
+};
+
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
@@ -10,7 +23,12 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     }
   );
 
-  if (!response.ok) return <div>영화를 찾을 수 없습니다.</div>;
+  if (!response.ok) {
+    if (response.status === 404) {
+      notFound();
+    }
+    <div>영화를 찾을 수 없습니다.</div>;
+  }
 
   const movie: MovieData = await response.json();
 
