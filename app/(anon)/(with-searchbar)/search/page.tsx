@@ -1,5 +1,6 @@
 import { MovieData } from "@/app/types/types";
 import MovieItem from "@/app/(anon)/(with-searchbar)/components/movieItem";
+import delay from "@/app/delay";
 
 const Page = async ({
   searchParams,
@@ -10,6 +11,7 @@ const Page = async ({
 
   if (!q.trim()) return <div>검색어를 입력해 주세요</div>;
 
+  await delay(1000);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/movie/search?q=${q}`,
     {

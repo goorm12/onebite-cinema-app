@@ -1,7 +1,9 @@
 import { MovieData } from "@/app/types/types";
 import MovieItem from "./movieItem";
+import delay from "@/app/delay";
 
 const AllMovies = async () => {
+  await delay(1500);
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie`, {
     cache: "force-cache",
   });
@@ -12,7 +14,6 @@ const AllMovies = async () => {
 
   return (
     <section className="flex flex-col gap-4">
-      <h1>등록된 모든 영화</h1>
       <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-3.5">
         {movies.map((movie) => (
           <MovieItem key={movie.id} movie={movie} />
