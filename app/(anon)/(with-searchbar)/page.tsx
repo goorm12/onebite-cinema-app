@@ -1,13 +1,22 @@
 import { Suspense } from "react";
 import AllMovies from "./components/allMovies";
 import RecoMovies from "./components/recoMovies";
+import MovieItemListSkeleton from "./components/skeleton/movieItemListSkeleton";
+
 const Home = () => {
   return (
     <div className="flex flex-col gap-5">
-      <Suspense fallback={<div>🎬 추천 영화 로딩 중...</div>}>
+      <h1>지금 가장 추천하는 영화</h1>
+      <Suspense
+        fallback={<MovieItemListSkeleton count={3} gridCols="grid-cols-3" />}
+      >
         <RecoMovies />
       </Suspense>
-      <Suspense fallback={<div>📽 전체 영화 로딩 중...</div>}>
+
+      <h1>등록된 모든 영화</h1>
+      <Suspense
+        fallback={<MovieItemListSkeleton count={18} gridCols="grid-cols-5" />}
+      >
         <AllMovies />
       </Suspense>
     </div>
