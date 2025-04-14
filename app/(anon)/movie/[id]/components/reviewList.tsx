@@ -3,7 +3,8 @@ import ReviewItem from "./reviewItem";
 
 const ReviewList = async ({ movieId }: { movieId: string }) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/review/movie/${movieId}`
+    `${process.env.NEXT_PUBLIC_API_URL}/review/movie/${movieId}`,
+    { next: { tags: [`review-${movieId}`] } }
   );
 
   if (!response.ok) return <div>댓글을 불러올 수 가 없습니다.</div>;
