@@ -1,12 +1,17 @@
 "use server";
 
-export const createReviewAction = async (formData: FormData) => {
+import { revalidateTag } from "next/cache";
+
+export const createReviewAction = async (_: any, formData: FormData) => {
   const movieId = formData.get("movieId")?.toString();
   const content = formData.get("content")?.toString();
   const author = formData.get("author")?.toString();
 
   if (!movieId || !content || !author) {
-    return;
+    return {
+      status: false,
+      error: "댓글 내용과 작성자는 필수입니다.",
+    };
   }
 
   try {
@@ -22,9 +27,19 @@ export const createReviewAction = async (formData: FormData) => {
       }),
     });
 
-    console.log(response.status);
+    if (!response.ok) {
+      throw new Error("댓글 저장에 실패했습니다.");
+    }
+
+    revalidateTag(`review-${movieId}`);
+    return {
+      status: true,
+      error: "",
+    };
   } catch (error) {
-    console.error(error);
-    return;
+    return {
+      status: false,
+      error: `댓글 저장에 실패했습니다.${error}`,
+    };
   }
 };
