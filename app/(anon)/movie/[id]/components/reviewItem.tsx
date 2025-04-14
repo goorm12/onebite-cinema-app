@@ -1,6 +1,13 @@
 import { ReviewData } from "@/app/types/reviewData";
+import ReviewDeleteButton from "./reviewDeleteButton";
 
-const ReviewItem = ({ content, author, createdAt }: ReviewData) => {
+const ReviewItem = ({
+  id,
+  content,
+  author,
+  createdAt,
+  movieId,
+}: ReviewData) => {
   return (
     <section className="border-1 rounded-md py-2 px-4 flex flex-col gap-2 items-start">
       <div className="flex gap-2 items-center">
@@ -10,9 +17,9 @@ const ReviewItem = ({ content, author, createdAt }: ReviewData) => {
         </p>
       </div>
       <p>{content}</p>
-      <button className=" cursor-pointer text-xs text-neutral-400 border-b border-netural-400">
-        🗑️ 리뷰 삭제하기
-      </button>
+      <div className="text-xs text-neutral-400 border-b border-netural-400">
+        <ReviewDeleteButton reviewId={id} movieId={movieId} />
+      </div>
     </section>
   );
 };
