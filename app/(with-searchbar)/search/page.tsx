@@ -1,6 +1,7 @@
 import { MovieData } from "@/app/types/types";
-import MovieItem from "@/app/(anon)/(with-searchbar)/components/movieItem";
+
 import delay from "@/app/delay";
+import MovieItem from "../components/movieItem";
 
 const Page = async ({
   searchParams,

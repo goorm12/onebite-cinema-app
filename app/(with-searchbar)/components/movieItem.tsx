@@ -1,5 +1,6 @@
+import { MovieData } from "@/app/types/types";
 import Image from "next/image";
-import { MovieData } from "../../../types/types";
+
 import Link from "next/link";
 
 const MovieItem = ({ movie }: { movie: MovieData }) => {

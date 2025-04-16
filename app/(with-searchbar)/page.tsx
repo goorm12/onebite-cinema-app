@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import AllMovies from "./components/allMovies";
-import RecoMovies from "./components/recoMovies";
 import MovieItemListSkeleton from "./components/skeleton/movieItemListSkeleton";
+import RecoMovies from "./components/recoMovies";
+import AllMovies from "./components/allMovies";
 
 const Home = () => {
   return (
