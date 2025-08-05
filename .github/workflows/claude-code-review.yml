@@ -1,5 +1,4 @@
 name: Claude Code Review
-
 on:
   pull_request:
     types: [opened, synchronize]
@@ -9,7 +8,6 @@ on:
     #   - "src/**/*.tsx"
     #   - "src/**/*.js"
     #   - "src/**/*.jsx"
-
 jobs:
   claude-review:
     # Optional: Filter by PR author
@@ -30,21 +28,52 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-
       - name: Run Claude Code Review
         id: claude-review
         uses: anthropics/claude-code-action@beta
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-
           # Optional: Specify model (defaults to Claude Sonnet 4, uncomment for Claude Opus 4)
           # model: "claude-opus-4-20250514"
           
           # Direct prompt for automated review (no @claude mention needed)
-          direct_prompt:
-            이 PR을 리뷰해줘. 다음에 집중해줘:
-            - 보안 취약점
-            - 성능 이슈
-            - 버그 가능성
-            - 코드 품질 개선점
-
+          direct_prompt: |
+            ## 프로젝트 컨텍스트
+            - **기술 스택**: React + TypeScript + Zustand + Vanilla Extract + Next.js
+            - **아키텍처**: MVVM 패턴 (View-ViewModel-Model)
+          
+            ## 필수 검토 항목
+          
+            ### 🏗️ MVVM 패턴 준수
+            - `components/` (View): UI 렌더링과 이벤트 처리만
+            - `hooks/` (ViewModel): 비즈니스 로직, Zustand 구독
+            - `api/` (Model): 데이터 통신만 담당
+          
+            ### 📝 코드 가독성 (필수)
+            - **함수 주석**: 모든 함수에 JSDoc 필수 (`@param`, `@returns`, `@throws`)
+            - **복잡한 로직**: 왜 그렇게 구현했는지 설명 주석 필수
+            - **변수명**: 명확하고 직관적 (예: `isUserLoggedIn`, `studentExamResults`)
+          
+            ### 🎯 네이밍 컨벤션
+            - 폴더: kebab-case (`class-manage`)
+            - 컴포넌트: PascalCase (`StudentList.tsx`)
+            - 함수/변수: camelCase (`getUserData`)
+            - API 함수: `api` 접두사 (`apiGetStudents`)
+            - 상수: UPPER_CASE (`MAX_FILE_SIZE`)
+            - Boolean: `is/has/can` 접두사 (`isLoading`)
+          
+            ### ⚡ React/TypeScript 규칙
+            - Zustand 선택적 구독 사용
+            - Recipe 우선 (Vanilla Extract)
+            - 에러 처리 필수 (try-catch, 에러 로깅)
+            - props 2개 이상 시 interface 정의
+          
+            ## 리뷰 요청
+            위 컨텍스트를 바탕으로 다음을 중점 검토해주세요:
+            - MVVM 패턴 위반 여부
+            - 함수 주석 누락
+            - 네이밍 컨벤션 위반
+            - 보안/성능 이슈
+            - TypeScript 타입 안전성
+          
+            **스타일이나 사소한 문제는 무시하고, 실제 문제가 될 수 있는 것만 간결하게 지적해주세요.**
