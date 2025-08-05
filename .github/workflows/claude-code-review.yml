@@ -48,9 +48,23 @@ jobs:
             - `components/` (View): UI 렌더링과 이벤트 처리만
             - `hooks/` (ViewModel): 비즈니스 로직, Zustand 구독
             - `api/` (Model): 데이터 통신만 담당
+            
+            **View (components/)에서 허용:**
+            - 간단한 UI 상태 변경 핸들러
+            - 폼 입력 처리 함수
+            - ViewModel 함수의 단순 호출
+            - 기본적인 이벤트 처리
+  
+            **ViewModel (hooks/)로 이동 필요:**
+            - 비즈니스 로직이 포함된 함수
+            - 데이터 변환/계산 로직
+            - 복잡한 조건부 처리
+            - API 호출 및 에러 처리
+  
+            간단한 UI 핸들러는 View에서 사용해도 되지만,
+            비즈니스 로직이 포함되면 ViewModel로 분리해주세요.
           
             ### 📝 코드 가독성 (필수)
-            - **함수 주석**: 모든 함수에 JSDoc 필수 (`@param`, `@returns`, `@throws`)
             - **복잡한 로직**: 왜 그렇게 구현했는지 설명 주석 필수
             - **변수명**: 명확하고 직관적 (예: `isUserLoggedIn`, `studentExamResults`)
           
