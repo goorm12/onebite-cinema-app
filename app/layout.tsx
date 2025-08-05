@@ -25,6 +25,9 @@ export default function RootLayout({
               <Link href="/community" className="text-white hover:text-gray-300 transition-colors">
                 커뮤니티
               </Link>
+              <Link href="/cart" className="text-white hover:text-gray-300 transition-colors">
+                장바구니
+              </Link>
             </nav>
           </div>
           {children}
